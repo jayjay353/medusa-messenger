@@ -1,0 +1,1651 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Medusa Messenger</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>  
+
+<!-- Splash -->
+<div class="screen active" id="splash">
+  <a href="#auth" class="btn-start">Loslegen</a>
+</div>
+
+<!-- Auth -->
+<div class="screen" id="auth">
+  <div class="auth-logo">🐍</div>
+  <div class="auth-title">Medusa Messenger</div>
+  <div class="auth-subtitle">Sicher. Privat. Dein.</div>
+
+  <div class="auth-tabs">
+    <div class="auth-tab active" onclick="switchTab('login', this)">Anmelden</div>
+    <div class="auth-tab" onclick="switchTab('register', this)">Registrieren</div>
+  </div>
+
+  <div id="login-form">
+    <div class="input-group">
+      <label>E-Mail</label>
+      <input type="email" id="login-email" placeholder="deine@email.de">
+    </div>
+    <div class="input-group">
+      <label>Passwort</label>
+      <input type="password" id="login-password" placeholder="••••">
+    </div>
+    <button class="btn-primary" onclick="handleLogin()">Anmelden</button>
+  </div>
+
+  <div id="register-form" style="display:none;">
+    <div class="input-group">
+      <label>Benutzername</label>
+      <input type="text" id="reg-username" placeholder="MedusaUser">
+    </div>
+    <div class="input-group">
+      <label>E-Mail</label>
+      <input type="email" id="reg-email" placeholder="deine@email.de">
+    </div>
+    <div class="input-group">
+      <label>Passwort</label>
+      <input type="password" id="reg-password" placeholder="Mind. 6 Zeichen">
+    </div>
+    <button class="btn-primary" onclick="handleRegister()">Konto erstellen</button>
+  </div>
+</div>
+
+<!-- Chatlist -->
+<div class="screen" id="chatlist">
+  <div class="chatlist-header">
+  <div class="header-right">
+    <img src="/medusabanner.png" class="profile-icon" alt="Profile">
+    <button class="menu-btn" onclick="toggleMenu()">⋮</button>
+  </div>
+  <div class="menu-dropdown" id="menu-dropdown">
+  <div class="menu-item" onclick="alert('Neue Gruppe kommt bald')">
+    Neue Gruppe
+  </div>
+  <div class="menu-item" onclick="alert('Neuer Broadcast kommt bald')">
+    Neuer Broadcast
+  </div>
+  <div class="menu-item" onclick="alert('Verknüpfte Geräte kommt bald')">
+    Verknüpfte Geräte
+  </div>
+  <div class="menu-item" onclick="alert('Mit Stern markiert kommt bald')">
+    Mit Stern markiert
+  </div>
+  <div class="menu-item" onclick="alert('Alle gelesen kommt bald')">
+    Alle gelesen
+  </div>
+  <div class="menu-item" onclick="location.hash='settings'">
+  Einstellungen
+</div>
+  <div class="menu-item" onclick="handleLogout()">
+    Abmelden
+  </div>
+</div>
+</div>
+
+  <input type="text" class="search-bar" placeholder="Suche">
+
+  <div class="tab-bar">
+    <div class="tab active">Alle</div>
+    <div class="tab">Ungelesen</div>
+    <div class="tab">Gruppen</div>
+    <div class="tab">Favoriten</div>
+  </div>
+
+  <div class="chat-content">
+    <button class="fab">+</button>
+  </div>
+
+  <div class="bottom-nav">
+    <div class="nav-item active">
+      <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z"/></svg>
+      <span>Chats</span>
+    </div>
+    <div class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M6.62 10.79c1.35 2.54 3.69 4.87 6.24 6.21l2.21-2.21c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.04 0 .08 0 .11-.002.33-.03.63-.17.87-.31l.12-.08c.14-.09.27-.21.39-.35.02-.02.05-.05.07-.08 2.38-2.38 2.38-6.24 0-8.62-.02-.02-.05-.05-.07-.07-.11-.11-.24-.23-.39-.31l-.12-.08c-.23-.12-.53-.24-.87-.25-.02-.002-.06-.003-.09-.003-.85 0-1.66.2-2.37.55L18.63 6.4c-2.35-1.37-5.32-.56-6.69 1.79L10.11 10H7.4c-.62 0-1.19.37-1.42.95-.23.58-.09 1.25.35 1.68l3.47 3.47c.22.22.5.33.78.33s.56-.11.78-.33L15 12.3c.96.92 2.24 1.43 3.59 1.43.04 0 .08 0 .12-.002.32-.03.62-.16.87-.29.02-.01.05-.03.07-.05 2.41-2.43 2.39-6.38-.04-8.81-.02-.02-.04-.03-.06-.05-.18-.18-.4-.31-.64-.39l-.18-.06c-.32-.11-.68-.18-1.04-.19C17.3 3.9 16.5 4 15.76 4.2c-2.86.4-5.03 2.71-5.03 5.56 0 .1 0 .2.01.3 0 .06-.02.11-.02.17 0 .06 0 .11.01.17-.06 1.17-.96 2.09-2.14 2.03-1.2-.06-2.17-1.06-2.17-2.26v-.17c0-.05 0-.1.01-.15H5.1c.04 2.34 1.95 4.22 4.29 4.27 2.31.05 4.21-1.83 4.27-4.15.02-.69-.18-1.35-.55-1.93l4.47-4.47c.27-.27.67-.36 1.02-.24 1.11.37 2.33.57 3.57.57.04 0 .08 0 .11-.002.33-.03.63-.17.87-.31l.12-.08c.14-.09.27-.21.39-.35.02-.02.05-.05.07-.08 2.38-2.38 2.38-6.24 0-8.62z"/></svg>
+      <span>Anrufe</span>
+    </div>
+    <div class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>
+      <span>Kontakte</span>
+    </div>
+    <div class="nav-item">
+      <svg viewBox="0 0 24 24"><path d="M19.43 12.98c.04-.32.07-.64.07-.98s-.03-.66-.07-.98l2.11-1.65c.19-.15.24-.42.12-.64l-2-3.46c-.12-.22-.39-.3-.61-.22l-2.49 1c-.52-.4-1.08-.73-1.69-.98l-.38-2.65C14.46 2.18 14.25 2 14 2h-4c-.25 0-.46.18-.49.42l-.38 2.65c-.61.25-1.17.59-1.69.98l-2.49-1c-.23-.09-.49 0-.61.22l-2 3.46c-.13.22-.07.49.12.64l2.11 1.65c-.04.32-.07.65-.07.98s.03.66.07.98l-2.11 1.65c-.19.15-.24.42-.12.64l2 3.46c.12.22.39.3.61.22l2.49-1c.52.4 1.08.73 1.69.98l.38 2.65c.03.24.24.42.49.42h4c.25 0 .46-.18.49-.42l.38-2.65c.61-.25 1.17-.59 1.69-.98l2.49 1c.23.09.49 0 .61-.22l2-3.46c.12-.22.07-.49-.12-.64l-2.11-1.65zM12 15.5c-1.93 0-3.5-1.57-3.5-3.5s1.57-3.5 3.5-3.5 3.5 1.57 3.5 3.5-1.57 3.5-3.5 3.5z"/></svg>
+      <span>Einstellungen</span>
+    </div>
+  </div>
+</div>
+
+<!-- Settings -->
+<div class="screen" id="settings">
+  <div class="settings-header">
+    <button class="back-btn" onclick="location.hash='chatlist'">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    </button>
+    <h2>Einstellungen</h2>
+    <button class="search-btn">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+    </button>
+  </div>
+
+  <div class="settings-content">
+    <!-- Profil -->
+    <div class="settings-profile">
+      <img src="/medusabanner.png" class="settings-avatar" alt="Profile">
+      <div class="settings-profile-info">
+        <div class="settings-name">Name auswählen</div>
+        <div class="settings-status">Was beschäftigt dich heute...</div>
+      </div>
+      <div class="settings-profile-actions">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--muted)"><path d="M3 11.5a2.5 2.5 0 0 1 2.5-2.5h9a2.5 2.5 0 0 1 2.5 2.5v1a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 3 12.5v-1zm2.5-.5a.5.5 0 1 0 0 1 .5.5 0 0 0 0-1zm9.5.5a.5.5 0 1 0 1 0 .5.5 0 0 0-1 0z"/></svg>
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--accent-light)"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+      </div>
+    </div>
+
+    <!-- Menü Punkte -->
+    <div class="settings-group">
+      <div class="settings-item" onclick="location.hash='account'">
+  <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+  <div class="settings-item-text">
+    <div class="settings-item-title">Konto</div>
+    <div class="settings-item-sub">Sicherheitsbenachrichtigungen, Nummer ändern</div>
+  </div>
+</div>
+
+      <div class="settings-item" onclick="location.hash='privacy'">
+  <svg viewBox="0 0 24 24"><path d="M12 17c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm6-9h-1V7c0-2.76-2.24-5-5-5S7 4.24 7 7v1H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM8.9 7c0-1.71 1.39-3.1 3.1-3.1s3.1 1.39 3.1 3.1v1H8.9V7z"/></svg>
+  <div class="settings-item-text">
+    <div class="settings-item-title">Datenschutz</div>
+    <div class="settings-item-sub">Blockierte Konten, selbstlöschende Nachrichten</div>
+  </div>
+</div>
+
+      <div class="settings-item" onclick="location.hash='lists'">
+  <svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+  <div class="settings-item-text">
+    <div class="settings-item-title">Listen</div>
+    <div class="settings-item-sub">Personen und Gruppen verwalten</div>
+  </div>
+</div>
+
+      <div class="settings-item" onclick="location.hash='chats-settings'">
+  <svg viewBox="0 0 24 24"><path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/></svg>
+  <div class="settings-item-text">
+    <div class="settings-item-title">Chats</div>
+    <div class="settings-item-sub">Design, Hintergründe, Chatverlauf</div>
+  </div>
+</div>
+
+      <div class="settings-item" onclick="location.hash='notifications'">
+  <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2zm-2 1H8v-6c0-2.48 1.51-4.5 4-4.5s4 2.02 4 4.5v6z"/></svg>
+  <div class="settings-item-text">
+    <div class="settings-item-title">Benachrichtigungen</div>
+    <div class="settings-item-sub">Töne, Vibrationen, Pop-ups</div>
+  </div>
+</div>
+
+      <div class="settings-item" onclick="location.hash='accessibility'">
+  <svg viewBox="0 0 24 24" fill="var(--muted)"><path d="M12 2c1.1 0 2 .9 2 2s-.9 2-2 2-2-.9-2-2 .9-2 2-2zm9 7h-6v13h-2v-6h-2v6H9V9H3V7h18v2z"/></svg>
+  <div class="settings-item-text">
+    <div class="settings-item-title">Bedienungshilfen</div>
+    <div class="settings-item-sub">Kontrast, Animationen</div>
+  </div>
+</div>
+
+      <div class="settings-item" onclick="location.hash='help-feedback'">
+  <svg viewBox="0 0 24 24" fill="var(--muted)"><path d="M11 18h2v-2h-2v2zm1-16C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-2.21 0-4 1.79-4 4h2c0-1.1.9-2 2-2s2 .9 2 2c0 2-3 1.75-3 5h2c0-2.25 3-2.5 3-5 0-2.21-1.79-4-4-4z"/></svg>
+  <div class="settings-item-text">
+    <div class="settings-item-title">Hilfe und Feedback</div>
+    <div class="settings-item-sub">Hilfebereich, Kontakt, App-Info</div>
+  </div>
+</div> 
+   </div>
+
+<div class="settings-item" onclick="location.hash='app-language'">
+  <svg viewBox="0 0 24 24" fill="var(--muted)"><path d="M12.87 15.07l-2.54-2.51.03-.03c1.74-1.94 2.98-4.17 3.71-6.53H17V4h-7V2H8v2H1v1.99h11.17C11.5 7.92 10.44 9.75 9 11.35 8.07 10.32 7.3 9.19 6.69 8h-2c.73 1.63 1.79 3.17 3.03 4.4l-5.5 5.5 1.42 1.41L5.82 17h.05l7.43-7.43-.05.07 2.53 2.54 1.42-1.42zM21 15h-2v3h-3v2h3v3h2v-3h3v-2h-3z"/></svg>
+  <div class="settings-item-text">
+    <div class="settings-item-title">App-Sprache</div>
+    <div class="settings-item-sub">Deutsch (Gerätesprache)</div>
+  </div>
+</div>
+
+    <div class="settings-footer">
+      <div class="settings-footer-title">Medusa Messenger</div>
+      <div class="settings-footer-sub">Version 1.0.0</div>
+    </div>
+  </div>
+</div>
+
+<!-- Account -->
+<div class="screen" id="account">
+  <div class="settings-header">
+    <button class="back-btn" onclick="location.hash='settings'">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="white">
+        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+      </svg>
+    </button>
+    <h2>Konto</h2>
+  </div>
+
+  <div class="settings-content">
+    <div class="settings-group">
+
+      <!-- 1. E-Mail-Adresse -->
+      <div class="settings-item" data-target="sheet-email">
+        <svg viewBox="0 0 24 24" fill="var(--muted)">
+          <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+        <div class="settings-item-text">
+          <div class="settings-item-title">E-Mail-Adresse</div>
+          <div class="settings-item-sub" id="account-email">nicht festgelegt</div>
+        </div>
+        <svg viewBox="0 0 24 24" fill="var(--muted)" width="20" height="20">
+          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+        </svg>
+      </div>
+
+      <!-- 2. 2FA -->
+      <div class="settings-item" data-target="sheet-2fa">
+        <svg viewBox="0 0 24 24" fill="var(--muted)">
+          <path d="M17 2H7c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM7 20V4h10v16H7z"/>
+        </svg>
+        <div class="settings-item-text">
+          <div class="settings-item-title">Verifizierung in zwei Schritten</div>
+          <div class="settings-item-sub">Deaktiviert</div>
+        </div>
+        <svg viewBox="0 0 24 24" fill="var(--muted)" width="20" height="20">
+          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+        </svg>
+      </div>
+
+      <!-- 3. Sicherheitsbenachrichtigungen -->
+      <div class="settings-item" data-target="sheet-security">
+        <svg viewBox="0 0 24 24" fill="var(--muted)">
+          <path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/>
+        </svg>
+        <div class="settings-item-text">
+          <div class="settings-item-title">Sicherheitsbenachrichtigungen</div>
+          <div class="settings-item-sub">Aktiviert</div>
+        </div>
+        <svg viewBox="0 0 24 24" fill="var(--muted)" width="20" height="20">
+          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+        </svg>
+      </div>
+
+      <!-- 4. Passkeys -->
+      <div class="settings-item" data-target="sheet-passkeys">
+        <svg viewBox="0 0 24 24" fill="var(--muted)">
+          <path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+        </svg>
+        <div class="settings-item-text">
+          <div class="settings-item-title">Passkeys</div>
+          <div class="settings-item-sub">Keine Passkeys</div>
+        </div>
+        <svg viewBox="0 0 24 24" fill="var(--muted)" width="20" height="20">
+          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+        </svg>
+      </div>
+
+      <div class="settings-divider"></div>
+
+      <!-- 5. Konto löschen -->
+      <div class="settings-item" data-target="sheet-delete" style="color: var(--danger);">
+        <svg viewBox="0 0 24 24" fill="var(--danger)">
+          <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+        </svg>
+        <div class="settings-item-text">
+          <div class="settings-item-title">Konto löschen</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SHEETS - nur 1x pro Sheet, nicht doppelt -->
+
+  <!-- E-Mail Sheet -->
+  <div class="bottom-sheet" id="sheet-email">
+    <div class="bottom-sheet-header">
+      <button class="close-btn">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--text)">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+      </button>
+      <h3>E-Mail hinzufügen</h3>
+    </div>
+    <div class="bottom-sheet-content twofa-content">
+      <p class="twofa-text">
+        Mit einer E-Mail-Adresse können wir dein Konto verifizieren oder dich bei Sicherheitsproblemen und Support-Fragen erreichen. Sie ist für andere nicht sichtbar.
+        <a href="#" class="twofa-link">Mehr erfahren</a>
+      </p>
+      <div class="twofa-input-wrapper">
+        <input type="email" id="email-input" placeholder="E-Mail" class="twofa-input">
+      </div>
+      <button class="twofa-btn" id="email-btn" disabled>Weiter</button>
+    </div>
+  </div>
+
+  <!-- 2FA Sheet -->
+  <div class="bottom-sheet" id="sheet-2fa">
+    <div class="bottom-sheet-header">
+      <button class="close-btn">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--text)">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+      </button>
+      <h3>Verifizierung in zwei Schritten</h3>
+    </div>
+    <div class="bottom-sheet-content twofa-content">
+      <div style="text-align: center; margin: 20px 0 32px;">
+        <span style="background: var(--accent); color: var(--bg); padding: 8px 16px; border-radius: 8px; font-weight: 600;">***</span>
+      </div>
+      <p class="twofa-text">
+        Aktiviere als zusätzliche Sicherheitsmaßnahme die Verifizierung in zwei Schritten, damit du bei einer erneuten Registrierung deiner Telefonnummer bei Medusa Messenger eine PIN eingeben musst.
+        <a href="#" class="twofa-link">Mehr erfahren</a>
+      </p>
+      <input type="tel" id="twofa-phone" placeholder="+49 123 456789" class="twofa-input">
+      <button class="twofa-btn" id="twofa-btn" disabled>Code senden</button>
+    </div>
+  </div>
+
+  <!-- Security Sheet -->
+  <div class="bottom-sheet" id="sheet-security">
+    <div class="bottom-sheet-header">
+      <button class="close-btn">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--text)">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+      </button>
+      <h3>Sicherheitsbenachrichtigungen</h3>
+    </div>
+    <div class="bottom-sheet-content security-content">
+      <div class="security-icon">
+        <svg viewBox="0 0 24 24" width="72" height="72" fill="var(--accent-light)">
+          <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
+        </svg>
+      </div>
+      <h2 class="security-title">Deine Chats und Anrufe sind privat</h2>
+      <p class="security-text">
+        Die Ende-zu-Ende-Verschlüsselung von Medusa Messenger sorgt dafür, dass deine persönlichen Nachrichten und Anrufe nur zwischen dir und deinen Gesprächspartner*innen sichtbar sind.
+      </p>
+      <ul class="security-list">
+        <li>Text- und Sprachnachrichten</li>
+        <li>Sprach- und Videoanrufe</li>
+        <li>Fotos, Videos und Dokumente</li>
+      </ul>
+      <div class="security-divider"></div>
+      <div class="security-toggle-row">
+        <div class="security-toggle-text">
+          <h4>Sicherheitsbenachrichtigungen auf diesem Gerät anzeigen</h4>
+          <p>Werde benachrichtigt, wenn sich dein Sicherheitscode ändert.</p>
+        </div>
+        <label class="switch">
+          <input type="checkbox">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Passkeys Sheet -->
+  <div class="bottom-sheet" id="sheet-passkeys">
+    <div class="bottom-sheet-header">
+      <button class="close-btn">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--text)">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+      </button>
+      <h3>Passkeys</h3>
+    </div>
+    <div class="bottom-sheet-content passkey-content">
+      <div class="passkey-icon">
+        <svg viewBox="0 0 24 24" width="72" height="72" fill="var(--accent-light)">
+          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+        </svg>
+      </div>
+      <h2 class="passkey-title">Passkey verwalten</h2>
+      <p class="passkey-text">Öffne Medusa Messenger per Fingerabdruck, Gesichtserkennung oder Displaysperre.</p>
+      <button class="passkey-add-btn">
+        <div class="passkey-add-icon">+</div>
+        <span>Passkey hinzufügen</span>
+      </button>
+      <div class="passkey-section">
+        <h4>Deine Passkeys</h4>
+        <p style="color: var(--muted); font-size: 14px;">Noch keine Passkeys hinzugefügt</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Sheet -->
+  <div class="bottom-sheet" id="sheet-delete">
+    <div class="bottom-sheet-header">
+      <button class="close-btn">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--text)">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+      </button>
+      <h3>Dieses Konto löschen</h3>
+    </div>
+    <div class="bottom-sheet-content delete-content">
+      <div class="delete-warning">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--danger)">
+          <path d="M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z"/>
+        </svg>
+        <h4 style="color: var(--danger);">Das bewirkt das Löschen dieses Kontos:</h4>
+      </div>
+      <ul class="delete-list">
+        <li>Das Konto wird in Medusa Messenger und von all deinen Geräten gelöscht.</li>
+        <li>Dein Chatverlauf wird gelöscht.</li>
+        <li>Du wirst aus allen Gruppen entfernt.</li>
+      </ul>
+      <div class="delete-divider"></div>
+      <div class="delete-alternative">
+        <svg viewBox="0 0 24 24" width="24" height="24" fill="var(--muted)">
+          <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+        </svg>
+        <h4>Stattdessen E-Mail ändern?</h4>
+      </div>
+      <button class="delete-change-btn" data-target="sheet-email">E-Mail-Adresse ändern</button>
+      <div class="delete-divider"></div>
+      <p class="delete-confirm-text">Um dein Konto zu löschen, bestätige deine E-Mail-Adresse und gib dein Passwort ein.</p>
+      <div class="delete-form">
+        <label>E-Mail</label>
+        <input type="email" placeholder="deine@email.de" class="delete-input" id="delete-email">
+        <label>Passwort</label>
+        <input type="password" placeholder="Passwort" class="delete-input" id="delete-password">
+      </div>
+      <button class="delete-confirm-btn" id="delete-confirm-btn" disabled>Konto löschen</button>
+    </div>
+  </div>
+</div>
+
+<!-- Privacy -->
+<div class="screen" id="privacy">
+  <div class="settings-header">
+    <button class="back-btn" onclick="location.hash='settings'">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    </button>
+    <h2>Datenschutz</h2>
+  </div>
+
+  <div class="settings-content">
+    
+    <div class="settings-section-title">Wer kann meine persönlichen Infos sehen?</div>
+    
+    <div class="settings-group">
+      <div class="settings-item" onclick="alert('Zuletzt online/Online kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Zuletzt online/Online</div>
+          <div class="settings-item-sub">Meine Kontakte/Alle</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Profilbild kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Profilbild</div>
+          <div class="settings-item-sub">Alle</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Info kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Info</div>
+          <div class="settings-item-sub">Meine Kontakte</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Links kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Links</div>
+          <div class="settings-item-sub">Meine Kontakte</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Status kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Status</div>
+          <div class="settings-item-sub">Meine Kontakte</div>
+        </div>
+      </div>
+
+      <div class="settings-item">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Lesebestätigungen</div>
+          <div class="settings-item-sub">Wenn ausgeschaltet, sendest und erhältst du keine Lesebestätigungen. In Gruppenchats werden Lesebestätigungen immer gesendet.</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+    </div>
+
+    <div class="settings-divider"></div>
+    <div class="settings-section-title">Selbstlöschende Nachrichten</div>
+    
+    <div class="settings-group">
+      <div class="settings-item" onclick="alert('Standard-Nachrichtendauer kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Standard-Nachrichtendauer</div>
+          <div class="settings-item-sub">Beginne neue Chats mit selbstlöschenden Nachrichten, die nach Ablauf deiner festgelegten Zeitdauer wieder verschwinden.</div>
+        </div>
+        <div class="settings-item-value">Aus</div>
+      </div>
+    </div>
+
+    <div class="settings-divider"></div>
+    
+    <div class="settings-group">
+      <div class="settings-item" onclick="alert('Gruppen kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Gruppen</div>
+          <div class="settings-item-sub">Meine Kontakte</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Avatar-Sticker kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Avatar-Sticker</div>
+          <div class="settings-item-sub">Meine Kontakte</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Live-Standort kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Live-Standort</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Anrufe kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Anrufe</div>
+          <div class="settings-item-sub">Anrufe von Unbekannt stummschalten</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Kontakte kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Kontakte</div>
+          <div class="settings-item-sub">Blockierte Konten, WhatsApp-Kontakte</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('App-Sperre kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">App-Sperre</div>
+          <div class="settings-item-sub">Deaktiviert</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Chatsperre kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Chatsperre</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Kanäle kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Kanäle</div>
+        </div>
+      </div>
+
+      <div class="settings-item">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Kameraeffekte erlauben</div>
+          <div class="settings-item-sub">Nutze Effekte in der Kamera und in Videoanrufen. <span style="color: var(--accent-light)">Mehr erfahren</span></div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="settings-item" onclick="alert('Erweitert kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Erweitert</div>
+          <div class="settings-item-sub">IP-Adresse in Anrufen schützen, Linkvorschau deaktivieren</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Privatsphäre-Check kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Privatsphäre-Check</div>
+          <div class="settings-item-sub">Bestimme über den Schutz deiner Daten und lege die richtigen Einstellungen für dich fest.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Lists -->
+<div class="screen" id="lists">
+  <div class="settings-header">
+    <button class="back-btn" onclick="location.hash='settings'">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    </button>
+    <h2>Listen</h2>
+    <button class="edit-btn" onclick="alert('Bearbeiten kommt bald')">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
+    </button>
+  </div>
+
+  <div class="lists-content">
+    
+    <!-- Illustration + Text -->
+    <div class="lists-hero">
+      <img src="/medusabanner.png" alt="Listen" class="lists-illustration">
+      <p class="lists-hero-text">
+        Jede von dir erstellte Liste wird zu einem Filter oben auf deinem Chats-Tab.
+      </p>
+    </div>
+
+    <!-- Button -->
+    <button class="lists-create-btn" onclick="alert('Liste erstellen kommt bald')">
+      + Eigene Liste erstellen
+    </button>
+
+    <!-- Deine Listen -->
+    <div class="settings-section-title">Deine Listen</div>
+    <div class="settings-group">
+      
+      <div class="settings-item" onclick="alert('Ungelesen kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Ungelesen</div>
+          <div class="settings-item-sub">Voreinstellung</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Favoriten kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Favoriten</div>
+          <div class="settings-item-sub">Personen oder Gruppen hinzufügen</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Gruppen kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Gruppen</div>
+          <div class="settings-item-sub">Voreinstellung</div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Verfügbare Voreinstellungen -->
+    <div class="settings-divider"></div>
+    <div class="settings-section-title">Verfügbare Voreinstellungen</div>
+    <div class="lists-info-text">
+      Wenn du eine voreingestellte Liste wie „Ungelesen“ oder „Gruppen“ entfernst, findest du sie hier wieder.
+    </div>
+
+  </div>
+</div>
+
+<!-- Chats Settings -->
+<div class="screen" id="chats-settings">
+  <div class="settings-header">
+    <button class="back-btn" onclick="location.hash='settings'">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    </button>
+    <h2>Chats</h2>
+  </div>
+
+  <div class="settings-content">
+    
+    <div class="settings-section-title">Anzeige</div>
+    <div class="settings-group">
+      
+      <div class="settings-item" onclick="alert('Design kommt bald')">
+        <svg viewBox="0 0 24 24" fill="var(--muted)"><path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c.83 0 1.5-.67 1.5-1.5 0-.39-.15-.74-.39-1.01-.23-.26-.51-.42-.83-.49-.62-.16-1.28-.09-1.87.51l-2.36 2.36C8.73 21.54 8.38 22 8 22c-2.21 0-4-1.79-4-4 0-.62.18-1.2.49-1.7l4.48-4.48c.61-.61 1.38-.94 2.19-.94h1.97c1.17 0 2.13-.96 2.13-2.13 0-1.17-.96-2.12-2.13-2.12H10.5c-.48 0-.93-.28-1.13-.71-.2-.43-.12-.95.22-1.29l.88-.88c.59-.59 1.53-.98 2.49-.98 2.21 0 4.01 1.8 4.01 4.01 0 .34-.03.67-.09 1-.15.73-.72 1.3-1.46 1.3h-1.5c-.83 0-1.5.67-1.5 1.5s.67 1.5 1.5 1.5h1.5c1.38 0 2.5-1.12 2.5-2.5v-.5c0-1.85-1.5-3.35-3.35-3.35-.16 0-.32.02-.48.05z"/></svg>
+        <div class="settings-item-text">
+          <div class="settings-item-title">Design</div>
+          <div class="settings-item-sub">Dunkel</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Standard-Chatdesign kommt bald')">
+        <svg viewBox="0 0 24 24" fill="var(--muted)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/></svg>
+        <div class="settings-item-text">
+          <div class="settings-item-title">Standard-Chatdesign</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="settings-divider"></div>
+    <div class="settings-section-title">Chat-Einstellungen</div>
+    <div class="settings-group">
+      
+      <div class="settings-item">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Enter = Senden</div>
+          <div class="settings-item-sub">Eingabetaste sendet die Nachricht</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="settings-item">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Sichtbarkeit von Medien</div>
+          <div class="settings-item-sub">Neu heruntergeladene Medien in der Galerie deines Geräts anzeigen</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="settings-item" onclick="alert('Schriftgröße kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Schriftgröße</div>
+          <div class="settings-item-sub">Mittel</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Transkripte kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Transkripte von Sprachnachrichten</div>
+          <div class="settings-item-sub">Lies neue Sprachnachrichten.</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="settings-divider"></div>
+    <div class="settings-section-title">Archivierte Chats</div>
+    <div class="settings-group">
+      
+      <div class="settings-item">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Chats im Archiv lassen</div>
+          <div class="settings-item-sub">Chats im Archiv verbleiben dort, auch wenn eine neue Nachricht empfangen wird.</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+    </div>
+
+    <div class="settings-divider"></div>
+    <div class="settings-group">
+      
+      <div class="settings-item" onclick="alert('Chat-Backup kommt bald')">
+        <svg viewBox="0 0 24 24" fill="var(--muted)"><path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96zM17 13l-5 5-5-5h3V9h4v4h3z"/></svg>
+        <div class="settings-item-text">
+          <div class="settings-item-title">Chat-Backup</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Chats übertragen kommt bald')">
+        <svg viewBox="0 0 24 24" fill="var(--muted)"><path d="M19 12v7H5v-7H3v7c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2v-7h-2zm-6 .67l2.59-2.58L17 11.5l-5 5-5-5 1.41-1.41L11 12.67V3h2z"/></svg>
+        <div class="settings-item-text">
+          <div class="settings-item-title">Chats übertragen</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Chatverlauf kommt bald')">
+        <svg viewBox="0 0 24 24" fill="var(--muted)"><path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/></svg>
+        <div class="settings-item-text">
+          <div class="settings-item-title">Chatverlauf</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- Notifications -->
+<div class="screen" id="notifications">
+  <div class="settings-header">
+    <button class="back-btn" onclick="location.hash='settings'">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    </button>
+    <h2>Benachrichtigungen</h2>
+    <button class="more-btn" onclick="alert('Mehr kommt bald')">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg>
+    </button>
+  </div>
+
+  <div class="settings-content">
+    
+    <!-- Allgemeine Einstellungen -->
+    <div class="settings-group">
+      
+      <div class="settings-item">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Nachrichtentöne</div>
+          <div class="settings-item-sub">Töne für eingehende und ausgehende Nachrichten abspielen</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="settings-item">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Erinnerungen</div>
+          <div class="settings-item-sub">Erhalte gelegentlich Erinnerungen an Nachrichten, Anrufe oder Statusmeldungen, die du noch nicht angesehen hast.</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+    </div>
+
+    <div class="settings-divider"></div>
+
+    <!-- Einzelchats -->
+    <div class="settings-section-title">Einzelchats</div>
+    <div class="settings-group">
+      
+      <div class="settings-item" onclick="alert('Benachrichtigungston kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Benachrichtigungston</div>
+          <div class="settings-item-sub">Standard (Spaceline)</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Vibration kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Vibration</div>
+          <div class="settings-item-sub">Standard</div>
+        </div>
+      </div>
+
+      <div class="settings-item">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Pop-up-Benachrichtigung</div>
+          <div class="settings-item-sub" style="color: var(--muted);">Nicht verfügbar</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Licht kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Licht</div>
+          <div class="settings-item-sub">Weiß</div>
+        </div>
+      </div>
+
+      <div class="settings-item">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Benachr. mit hoher Priorität benutzen</div>
+          <div class="settings-item-sub">Vorschau für alle Benachrichtigungen oben auf dem Bildschirm anzeigen</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="settings-item">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Benachrichtigungen bei Reaktionen</div>
+          <div class="settings-item-sub">Benachrichtigungen bei Reaktionen auf von dir gesendete Nachrichten anzeigen</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+    </div>
+
+    <div class="settings-divider"></div>
+
+    <!-- Gruppenchats -->
+    <div class="settings-section-title">Gruppenchats</div>
+    <div class="settings-group">
+      
+      <div class="settings-item" onclick="alert('Benachrichtigungston kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Benachrichtigungston</div>
+          <div class="settings-item-sub">Standard (Spaceline)</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Vibration kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Vibration</div>
+          <div class="settings-item-sub">Standard</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Licht kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Licht</div>
+          <div class="settings-item-sub">Weiß</div>
+        </div>
+      </div>
+
+      <div class="settings-item">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Benachr. mit hoher Priorität benutzen</div>
+          <div class="settings-item-sub">Vorschau für alle Benachrichtigungen oben auf dem Bildschirm anzeigen</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="settings-item">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Benachrichtigungen bei Reaktionen</div>
+          <div class="settings-item-sub">Benachrichtigungen bei Reaktionen auf von dir gesendete Nachrichten anzeigen</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+    </div>
+
+    <div class="settings-divider"></div>
+
+    <!-- Anrufe -->
+    <div class="settings-section-title">Anrufe</div>
+    <div class="settings-group">
+      
+      <div class="settings-item" onclick="alert('Klingelton kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Klingelton</div>
+          <div class="settings-item-sub">Standard (Galaxy Bells)</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Vibration kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Vibration</div>
+          <div class="settings-item-sub">Standard</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="settings-divider"></div>
+
+    <!-- Status -->
+    <div class="settings-section-title">Status</div>
+    <div class="settings-group">
+      
+      <div class="settings-item" onclick="alert('Benachrichtigungston kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Benachrichtigungston</div>
+          <div class="settings-item-sub">Standard (Spaceline)</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Vibration kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Vibration</div>
+          <div class="settings-item-sub">Standard</div>
+        </div>
+      </div>
+
+      <div class="settings-item">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Benachr. mit hoher Priorität benutzen</div>
+          <div class="settings-item-sub">Vorschau für alle Benachrichtigungen oben auf dem Bildschirm anzeigen</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="settings-item">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Reaktionen</div>
+          <div class="settings-item-sub">Erhalte Benachrichtigungen, wenn anderen dein Status gefällt.</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" checked>
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="settings-item">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Benachrichtigungspunkt auf dem App-Symbol</div>
+          <div class="settings-item-sub">Wird zurückgesetzt, wenn du alle Nachrichten und Anrufe angesehen hast</div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- Accessibility -->
+<div class="screen" id="accessibility">
+  <div class="settings-header">
+    <button class="back-btn" onclick="location.hash='settings'">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    </button>
+    <h2>Bedienungshilfen</h2>
+  </div>
+
+  <div class="settings-content">
+    <div class="settings-group">
+      
+      <div class="settings-item">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Kontrast erhöhen</div>
+          <div class="settings-item-sub">Dunkle die Hauptfarben ab, um die Lesbarkeit im Hellmodus zu verbessern.</div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox">
+          <span class="toggle-slider"></span>
+        </label>
+      </div>
+
+      <div class="settings-item" onclick="alert('Animationseinstellungen kommt bald')">
+        <div class="settings-item-text">
+          <div class="settings-item-title">Animation</div>
+          <div class="settings-item-sub">Wähle aus, ob sich Sticker und GIFs automatisch bewegen sollen.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Help & Feedback -->
+<div class="screen" id="help-feedback">
+  <div class="settings-header">
+    <button class="back-btn" onclick="location.hash='settings'">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="white"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+    </button>
+    <h2>Hilfe und Feedback</h2>
+  </div>
+
+  <div class="settings-content">
+    <div class="settings-group">
+      
+      <div class="settings-item" onclick="alert('Hilfebereich kommt bald')">
+        <svg viewBox="0 0 24 24" fill="var(--muted)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        <div class="settings-item-text">
+          <div class="settings-item-title">Hilfebereich</div>
+          <div class="settings-item-sub">Hole dir Hilfe und kontaktiere uns.</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Feedback senden kommt bald')">
+        <svg viewBox="0 0 24 24" fill="var(--muted)"><path d="M20 8h-2.81l-1.83-2.57c-.43-.61-1.2-.8-1.84-.43l-.01.01L12 5.62l-1.52-.99c-.65-.43-1.42-.18-1.84.43L6.81 8H4c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-8c0-1.1-.9-2-2-2zm0 10H4v-8h16v8zM9 11.5h6v1.5H9z"/></svg>
+        <div class="settings-item-text">
+          <div class="settings-item-title">Feedback senden</div>
+          <div class="settings-item-sub">Technische Probleme melden</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Bedingungen & Datenschutz kommt bald')">
+        <svg viewBox="0 0 24 24" fill="var(--muted)"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+        <div class="settings-item-text">
+          <div class="settings-item-title">Bedingungen & Datenschutzrichtlinie</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('Gemeldete Kanäle kommt bald')">
+        <svg viewBox="0 0 24 24" fill="var(--muted)"><path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-7 12h-2v-2h2v2zm0-4h-2V6h2v4z"/></svg>
+        <div class="settings-item-text">
+          <div class="settings-item-title">Gemeldete Kanäle</div>
+        </div>
+      </div>
+
+      <div class="settings-item" onclick="alert('App-Info kommt bald')">
+        <svg viewBox="0 0 24 24" fill="var(--muted)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+        <div class="settings-item-text">
+          <div class="settings-item-title">App-Info</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- App Language -->
+<div class="screen bottom-sheet" id="app-language">
+  <div class="bottom-sheet-handle"></div>
+  
+  <div class="bottom-sheet-header">
+    <button class="close-btn" onclick="closeBottomSheet()">
+  <svg viewBox="0 0 24 24" width="24" height="24" fill="white">
+    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+  </svg>
+</button>
+    <h2>App-Sprache</h2>
+  </div>  
+
+  <div class="language-list">
+    <div class="language-item selected" onclick="selectLanguage('de', this)">
+      <div class="radio selected"></div>
+      <div class="language-text">
+        <div class="language-native">Deutsch</div>
+        <div class="language-translated">(Gerätesprache)</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('af', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Afrikaans</div>
+        <div class="language-translated">Afrikaans</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('sq', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Shqip</div>
+        <div class="language-translated">Albanisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('am', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">አማርኛ</div>
+        <div class="language-translated">Amharisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('ar', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">العربية</div>
+        <div class="language-translated">Arabisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('az', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Azərbaycan dili</div>
+        <div class="language-translated">Aserbaidschanisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('bn', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">বাংলা</div>
+        <div class="language-translated">Bengalisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('bg', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Български</div>
+        <div class="language-translated">Bulgarisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('ca', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Català</div>
+        <div class="language-translated">Katalanisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('zh-CN', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">简体中文</div>
+        <div class="language-translated">Vereinfachtes Chinesisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('zh-HK', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">繁體中文 (香港)</div>
+        <div class="language-translated">Traditionelles Chinesisch (Hongkong)</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('zh-TW', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">繁體中文 (台灣)</div>
+        <div class="language-translated">Traditionelles Chinesisch (Taiwan)</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('hr', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Hrvatski</div>
+        <div class="language-translated">Kroatisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('cs', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Čeština</div>
+        <div class="language-translated">Tschechisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('da', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Dansk</div>
+        <div class="language-translated">Dänisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('nl', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Nederlands</div>
+        <div class="language-translated">Niederländisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('en', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">English</div>
+        <div class="language-translated">Englisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('et', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Eesti</div>
+        <div class="language-translated">Estnisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('fil', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Filipino</div>
+        <div class="language-translated">Filipino</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('fi', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Suomi</div>
+        <div class="language-translated">Finnisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('fr', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Français</div>
+        <div class="language-translated">Französisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('el', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Ελληνικά</div>
+        <div class="language-translated">Griechisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('gu', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">ગુજરાતી</div>
+        <div class="language-translated">Gujarati</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('ha', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Hausa</div>
+        <div class="language-translated">Haussa</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('he', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">עברית</div>
+        <div class="language-translated">Hebräisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('hi', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">हिन्दी</div>
+        <div class="language-translated">Hindi</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('hu', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Magyar</div>
+        <div class="language-translated">Ungarisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('id', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Indonesia</div>
+        <div class="language-translated">Indonesisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('ga', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Gaeilge</div>
+        <div class="language-translated">Irisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('it', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Italiano</div>
+        <div class="language-translated">Italienisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('ja', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">日本語</div>
+        <div class="language-translated">Japanisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('kn', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">ಕನ್ನಡ</div>
+        <div class="language-translated">Kannada</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('kk', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Қазақ тілі</div>
+        <div class="language-translated">Kasachisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('ko', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">한국어</div>
+        <div class="language-translated">Koreanisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('lo', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">ລາວ</div>
+        <div class="language-translated">Laotisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('lv', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Latviešu</div>
+        <div class="language-translated">Lettisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('lt', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Lietuvių</div>
+        <div class="language-translated">Litauisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('mk', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Македонски</div>
+        <div class="language-translated">Mazedonisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('ms', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Melayu</div>
+        <div class="language-translated">Malaiisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('ml', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">മലയാളം</div>
+        <div class="language-translated">Malayalam</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('mr', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">मराठी</div>
+        <div class="language-translated">Marathi</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('no', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Norsk bokmål</div>
+        <div class="language-translated">Norwegisch (Bokmål)</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('om', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Oromoo</div>
+        <div class="language-translated">Oromo</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('fa', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">فارسی</div>
+        <div class="language-translated">Persisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('pl', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Polski</div>
+        <div class="language-translated">Polnisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('pt-BR', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Português (Brasil)</div>
+        <div class="language-translated">Portugiesisch (Brasilien)</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('pt-PT', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Português (Portugal)</div>
+        <div class="language-translated">Portugiesisch (Portugal)</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('pa', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">ਪੰਜਾਬੀ</div>
+        <div class="language-translated">Punjabi</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('ro', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Română</div>
+        <div class="language-translated">Rumänisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('ru', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Русский</div>
+        <div class="language-translated">Russisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('sr', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Српски</div>
+        <div class="language-translated">Serbisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('sk', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Slovenčina</div>
+        <div class="language-translated">Slowakisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('sl', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Slovenščina</div>
+        <div class="language-translated">Slowenisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('es', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Español</div>
+        <div class="language-translated">Spanisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('sw', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Kiswahili</div>
+        <div class="language-translated">Suaheli</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('sv', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Svenska</div>
+        <div class="language-translated">Schwedisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('ta', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">தமிழ்</div>
+        <div class="language-translated">Tamil</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('te', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">తెలుగు</div>
+        <div class="language-translated">Telugu</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('th', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">ไทย</div>
+        <div class="language-translated">Thailändisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('tr', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Türkçe</div>
+        <div class="language-translated">Türkisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('uk', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Українська</div>
+        <div class="language-translated">Ukrainisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('ur', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">اردو</div>
+        <div class="language-translated">Urdu</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('uz', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Oʻzbek</div>
+        <div class="language-translated">Usbekisch</div>
+      </div>
+    </div>
+
+    <div class="language-item" onclick="selectLanguage('vi', this)">
+      <div class="radio"></div>
+      <div class="language-text">
+        <div class="language-native">Tiếng Việt</div>
+        <div class="language-translated">Vietnamesisch</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="js/crypto.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>
